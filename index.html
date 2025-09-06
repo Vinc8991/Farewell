@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Multi-Page Farewell Card</title>
+    <title>❤️ Siriwan ❤️</title>
     <style>
         * {
             margin: 0;
@@ -363,13 +363,13 @@
         <div class="farewell-card page-4" data-page="4">
             <div class="page-indicator">4 / 5</div>
             <div class="icon">✨</div>
-            <h2>Our Wishes for You</h2>
+            <h2>My Wishes for You</h2>
             <div class="decorative-element"></div>
             <div class="message">
                 เมื่อคุณเริ่มต้นบทใหม่ของชีวิต ฉันขออวยพรเงียบ ๆ ให้เส้นทางของคุณเต็มไปด้วยความมหัศจรรย์และความสุข ขอให้คุณพบความสำเร็จในทุกสิ่งที่ทำ พบความสงบในช่วงเวลาที่เงียบงัน และพบความรักในสถานที่ที่ไม่คาดคิด... แม้ความรักนั้นจะไม่ใช่ของฉันก็ตาม ทุกเช้าที่ตะวันขึ้น ฉันหวังว่าคุณจะพบแสงสว่างใหม่ และทุกยามตะวันลับฟ้า ขอให้คุณสัมผัสได้—แม้เพียงเล็กน้อย—ว่าครั้งหนึ่งคุณเคยมีความหมายมากแค่ไหนสำหรับใครคนหนึ่ง
             </div>
             <div class="quote">
-                "May your journey be filled with the magic of new discoveries."
+                "May your journey be filled with the magic."
                 "ขอให้การเดินทางของคุณเต็มไปด้วยความมหัศจรรย์แห่งการค้นพบสิ่งใหม่ ๆ"
             </div>
         </div>
@@ -390,6 +390,20 @@
             </div>
         </div>
 
+        <div class="farewell-card page-6" data-page="5">
+            <div class="page-indicator">6 / 5</div>
+            <div class="icon">💫</div>
+            <h2>With love</h2>
+            <div class="decorative-element"></div>
+            <div class="message">
+                With all our love and best wishes,<br>
+                ด้วยความรักและคำอวยพรจากใจของพวกเราทุกคน<br>
+            </div>
+            <div class="signature">
+                <strong>Your Dear Friend Vinc (Ro)</strong>
+            </div>
+        </div>
+
         <!-- Navigation -->
         <div class="navigation">
             <button class="nav-button" onclick="previousPage()" id="prevBtn" disabled>Previous</button>
@@ -399,6 +413,7 @@
                 <div class="dot" onclick="goToPage(3)"></div>
                 <div class="dot" onclick="goToPage(4)"></div>
                 <div class="dot" onclick="goToPage(5)"></div>
+                <div class="dot" onclick="goToPage(6)"></div>
             </div>
             <button class="nav-button" onclick="nextPage()" id="nextBtn">Next</button>
         </div>
@@ -406,7 +421,7 @@
 
     <script>
         let currentPage = 1;
-        const totalPages = 5;
+        const totalPages = 6;
 
         function showPage(pageNumber) {
             // Hide all pages
