@@ -19,7 +19,7 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
-            overflow: hidden;
+            padding-bottom: 120px;
         }
 
         .card-container {
@@ -194,6 +194,7 @@
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.5);
             transition: all 0.3s ease;
+            cursor: pointer;
         }
 
         .dot.active {
@@ -207,6 +208,7 @@
         .page-3 { background: linear-gradient(135deg, #f0fff4 0%, #fff 100%); }
         .page-4 { background: linear-gradient(135deg, #fff9e6 0%, #fff 100%); }
         .page-5 { background: linear-gradient(135deg, #f0f8ff 0%, #fff 100%); }
+        .page-6 { background: linear-gradient(135deg, #fdf2f8 0%, #fff 100%); }
 
         @media (max-width: 700px) {
             body {
@@ -319,7 +321,7 @@
     <div class="card-container">
         <!-- Page 1: Welcome -->
         <div class="farewell-card active page-1" data-page="1">
-            <div class="page-indicator">1 / 5</div>
+            <div class="page-indicator">1 / 6</div>
             <div class="icon">🌟</div>
             <h1>A Beautiful Journey</h1>
             <div class="decorative-element"></div>
@@ -331,7 +333,7 @@
 
         <!-- Page 2: Memories -->
         <div class="farewell-card page-2" data-page="2">
-            <div class="page-indicator">2 / 5</div>
+            <div class="page-indicator">2 / 6</div>
             <div class="icon">💭</div>
             <h2>Cherished Memories</h2>
             <div class="decorative-element"></div>
@@ -346,7 +348,7 @@
 
         <!-- Page 3: Gratitude -->
         <div class="farewell-card page-3" data-page="3">
-            <div class="page-indicator">3 / 5</div>
+            <div class="page-indicator">3 / 6</div>
             <div class="icon">🙏</div>
             <h2>With Gratitude</h2>
             <div class="decorative-element"></div>
@@ -361,7 +363,7 @@
 
         <!-- Page 4: Wishes -->
         <div class="farewell-card page-4" data-page="4">
-            <div class="page-indicator">4 / 5</div>
+            <div class="page-indicator">4 / 6</div>
             <div class="icon">✨</div>
             <h2>My Wishes for You</h2>
             <div class="decorative-element"></div>
@@ -376,28 +378,24 @@
 
         <!-- Page 5: Final Message -->
         <div class="farewell-card page-5" data-page="5">
-            <div class="page-indicator">5 / 5</div>
+            <div class="page-indicator">5 / 6</div>
             <div class="icon">💫</div>
             <h2>Until We Meet Again</h2>
             <div class="decorative-element"></div>
             <div class="message">
                 แม้ระยะทางอาจพรากเราออกจากกัน และเวลาอาจเคลื่อนไปอย่างเงียบงัน ขอให้คุณรู้ไว้... ว่าคุณได้พกพาส่วนหนึ่งของหัวใจฉันไปด้วย แม้คุณจะไม่เคยขอไว้ก็ตาม นี่ไม่ใช่การจากลาตลอดไป แต่เป็นการบอกลาแบบเงียบ ๆ ว่า 'แล้วพบกันใหม่' สายใยที่ฉันรู้สึก อาจเป็นเพียงของฉันคนเดียว แต่สำหรับฉัน มันไร้กาลเวลา ไม่ว่าชีวิตจะพาคุณไปที่ไหน คุณจะยังคงมีที่อยู่เสมอ... ในมุมเงียบ ๆ ของความคิดถึง และคำอธิษฐานที่ฉันไม่เคยกล้าพูดออกมา
             </div>
-            <div class="signature">
-                With all our love and best wishes,<br>
-                ด้วยความรักและคำอวยพรจากใจของพวกเราทุกคน<br>
-                <strong>Your Dear Friend Vinc (Ro)</strong>
-            </div>
         </div>
 
-        <div class="farewell-card page-6" data-page="5">
-            <div class="page-indicator">6 / 5</div>
-            <div class="icon">💫</div>
-            <h2>With love</h2>
+        <!-- Page 6: With Love -->
+        <div class="farewell-card page-6" data-page="6">
+            <div class="page-indicator">6 / 6</div>
+            <div class="icon">💖</div>
+            <h2>With Love</h2>
             <div class="decorative-element"></div>
             <div class="message">
-                With all our love and best wishes,<br>
-                ด้วยความรักและคำอวยพรจากใจของพวกเราทุกคน<br>
+                With all my love and best wishes,<br><br>
+                ด้วยความรักและคำอวยพรจากใจของพวกเราทุกคน
             </div>
             <div class="signature">
                 <strong>Your Dear Friend Vinc (Ro)</strong>
