@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Page Farewell Card</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        .card-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            height: 500px;
+            perspective: 1000px;
+        }
+
+        .farewell-card {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            opacity: 0;
+            transform: translateX(100px) rotateY(15deg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .farewell-card.active {
+            opacity: 1;
+            transform: translateX(0) rotateY(0deg);
+        }
+
+        .farewell-card.prev {
+            opacity: 0;
+            transform: translateX(-100px) rotateY(-15deg);
+        }
+
+        .page-indicator {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: #999;
+            font-size: 0.9rem;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .icon {
+            font-size: 3.5rem;
+            margin-bottom: 25px;
+            animation: gentle-float 3s ease-in-out infinite;
+        }
+
+        @keyframes gentle-float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        h1 {
+            color: #333;
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            font-weight: 300;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #555;
+            font-size: 2.2rem;
+            margin-bottom: 25px;
+            font-weight: 400;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            font-style: italic;
+        }
+
+        .message {
+            color: #555;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            text-align: center;
+            max-width: 450px;
+        }
+
+        .quote {
+            color: #666;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            font-style: italic;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .quote:before {
+            content: '"';
+            font-size: 3rem;
+            color: #ddd;
+            position: absolute;
+            top: -10px;
+            left: -20px;
+        }
+
+        .signature {
+            color: #888;
+            font-size: 1rem;
+            margin-top: auto;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .decorative-element {
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+            margin: 20px auto;
+            border-radius: 2px;
+            animation: shimmer 2s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .navigation {
+            position: absolute;
+            bottom: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .nav-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .page-dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            background: white;
+            transform: scale(1.2);
+        }
+
+        /* Page-specific styles */
+        .page-1 { background: linear-gradient(135deg, #fff 0%, #f8f9ff 100%); }
+        .page-2 { background: linear-gradient(135deg, #fff5f5 0%, #fff 100%); }
+        .page-3 { background: linear-gradient(135deg, #f0fff4 0%, #fff 100%); }
+        .page-4 { background: linear-gradient(135deg, #fff9e6 0%, #fff 100%); }
+        .page-5 { background: linear-gradient(135deg, #f0f8ff 0%, #fff 100%); }
+
+        @media (max-width: 700px) {
+            body {
+                padding: 10px;
+                padding-bottom: 140px;
+                align-items: flex-start;
+                padding-top: 40px;
+            }
+            
+            .card-container {
+                height: 450px;
+                max-width: 100%;
+            }
+            
+            .farewell-card {
+                padding: 25px 20px;
+                border-radius: 15px;
+            }
+            
+            h1 { 
+                font-size: 2.2rem; 
+                margin-bottom: 15px;
+            }
+            h2 { 
+                font-size: 1.8rem; 
+                margin-bottom: 20px;
+            }
+            .message { 
+                font-size: 1rem; 
+                line-height: 1.6;
+                margin-bottom: 20px;
+            }
+            
+            .quote {
+                font-size: 1rem;
+                line-height: 1.5;
+                margin: 15px 0;
+            }
+            
+            .quote:before {
+                font-size: 2rem;
+                top: -5px;
+                left: -15px;
+            }
+            
+            .icon {
+                font-size: 2.8rem;
+                margin-bottom: 20px;
+            }
+            
+            .navigation {
+                bottom: -80px;
+                gap: 15px;
+            }
+            
+            .nav-button {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+            
+            .page-dots {
+                gap: 6px;
+            }
+            
+            .dot {
+                width: 8px;
+                height: 8px;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+                margin-bottom: 20px;
+            }
+            
+            .decorative-element {
+                width: 60px;
+                margin: 15px auto;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .card-container {
+                height: 400px;
+            }
+            
+            .farewell-card {
+                padding: 20px 15px;
+            }
+            
+            h1 { font-size: 1.8rem; }
+            h2 { font-size: 1.5rem; }
+            
+            .message { 
+                font-size: 0.95rem;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 15px;
+                bottom: -100px;
+            }
+            
+            .nav-button {
+                width: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+        <!-- Page 1: Welcome -->
+        <div class="farewell-card active page-1" data-page="1">
+            <div class="page-indicator">1 / 5</div>
+            <div class="icon">🌟</div>
+            <h1>A Beautiful Journey</h1>
+            <div class="decorative-element"></div>
+            <div class="subtitle">Every ending is a new beginning</div>
+            <div class="message">
+                Welcome to this special farewell message. Like pages in a treasured book, 
+                each moment we've shared has written a beautiful story that will forever 
+                remain in our hearts.
+            </div>
+        </div>
+
+        <!-- Page 2: Memories -->
+        <div class="farewell-card page-2" data-page="2">
+            <div class="page-indicator">2 / 5</div>
+            <div class="icon">💭</div>
+            <h2>Cherished Memories</h2>
+            <div class="decorative-element"></div>
+            <div class="message">
+                The laughter we shared, the challenges we overcame together, and the quiet 
+                moments of understanding - these memories are like precious gems that sparkle 
+                brighter with time. They have shaped who we are and will continue to inspire 
+                us long after this goodbye.
+            </div>
+            <div class="quote">
+                "Memory is the treasure house of the mind wherein the monuments thereof are kept."
+            </div>
+        </div>
+
+        <!-- Page 3: Gratitude -->
+        <div class="farewell-card page-3" data-page="3">
+            <div class="page-indicator">3 / 5</div>
+            <div class="icon">🙏</div>
+            <h2>With Gratitude</h2>
+            <div class="decorative-element"></div>
+            <div class="message">
+                Thank you for the countless ways you've enriched our lives. Your kindness, 
+                wisdom, and unique perspective have been gifts that we treasure deeply. 
+                You've touched our hearts in ways that words can barely express, leaving 
+                footprints on our souls that time cannot erase.
+            </div>
+            <div class="quote">
+                "Gratitude turns what we have into enough, and more."
+            </div>
+        </div>
+
+        <!-- Page 4: Wishes -->
+        <div class="farewell-card page-4" data-page="4">
+            <div class="page-indicator">4 / 5</div>
+            <div class="icon">✨</div>
+            <h2>Our Wishes for You</h2>
+            <div class="decorative-element"></div>
+            <div class="message">
+                As you embark on this new chapter, may your path be filled with wonder and joy. 
+                May you find success in all your endeavors, peace in quiet moments, and 
+                love in unexpected places. May every sunrise bring new hope, and every sunset 
+                remind you of how much you are cherished.
+            </div>
+            <div class="quote">
+                "May your journey be filled with the magic of new discoveries."
+            </div>
+        </div>
+
+        <!-- Page 5: Final Message -->
+        <div class="farewell-card page-5" data-page="5">
+            <div class="page-indicator">5 / 5</div>
+            <div class="icon">💫</div>
+            <h2>Until We Meet Again</h2>
+            <div class="decorative-element"></div>
+            <div class="message">
+                Though distance may separate us and time may pass, know that you carry with you 
+                a piece of our hearts. This is not goodbye forever, but rather "see you later." 
+                The bonds we've forged are timeless, and wherever life takes you, you'll always 
+                have a home in our thoughts and prayers.
+            </div>
+            <div class="signature">
+                With all our love and best wishes,<br>
+                <strong>Your Dear Friends</strong>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="navigation">
+            <button class="nav-button" onclick="previousPage()" id="prevBtn" disabled>Previous</button>
+            <div class="page-dots">
+                <div class="dot active" onclick="goToPage(1)"></div>
+                <div class="dot" onclick="goToPage(2)"></div>
+                <div class="dot" onclick="goToPage(3)"></div>
+                <div class="dot" onclick="goToPage(4)"></div>
+                <div class="dot" onclick="goToPage(5)"></div>
+            </div>
+            <button class="nav-button" onclick="nextPage()" id="nextBtn">Next</button>
+        </div>
+    </div>
+
+    <script>
+        let currentPage = 1;
+        const totalPages = 5;
+
+        function showPage(pageNumber) {
+            // Hide all pages
+            document.querySelectorAll('.farewell-card').forEach(card => {
+                card.classList.remove('active', 'prev');
+            });
+
+            // Show current page
+            setTimeout(() => {
+                const currentCard = document.querySelector(`[data-page="${pageNumber}"]`);
+                currentCard.classList.add('active');
+            }, 100);
+
+            // Update dots
+            document.querySelectorAll('.dot').forEach((dot, index) => {
+                dot.classList.toggle('active', index + 1 === pageNumber);
+            });
+
+            // Update navigation buttons
+            document.getElementById('prevBtn').disabled = pageNumber === 1;
+            document.getElementById('nextBtn').disabled = pageNumber === totalPages;
+
+            if (pageNumber === totalPages) {
+                document.getElementById('nextBtn').textContent = 'Restart';
+                document.getElementById('nextBtn').disabled = false;
+            } else {
+                document.getElementById('nextBtn').textContent = 'Next';
+            }
+        }
+
+        function nextPage() {
+            if (currentPage < totalPages) {
+                const currentCard = document.querySelector(`[data-page="${currentPage}"]`);
+                currentCard.classList.add('prev');
+                currentPage++;
+            } else {
+                currentPage = 1;
+            }
+            showPage(currentPage);
+        }
+
+        function previousPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                showPage(currentPage);
+            }
+        }
+
+        function goToPage(pageNumber) {
+            const currentCard = document.querySelector(`[data-page="${currentPage}"]`);
+            if (pageNumber < currentPage) {
+                currentCard.classList.add('prev');
+            }
+            currentPage = pageNumber;
+            showPage(currentPage);
+        }
+
+        // Initialize
+        showPage(1);
+    </script>
+</body>
+</html>
